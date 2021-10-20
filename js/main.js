@@ -14,92 +14,98 @@ function getRandomFloat(min, max, numberOfDecimalPlaces) {
   return +randomNumber.toFixed(numberOfDecimalPlaces);
 }
 
-const offer = {
-  title: [
-    'Дом 1',
-    'Дом 2',
-    'Дом 3',
-    'Дом 4',
-    'Дом 5',
-    'Дом 6',
-    'Дом 7',
-    'Дом 8',
-    'Дом 9',
-    'Дом 10',
+const OFFER = {
+  TITLE: [
+    'Дом',
+    'Отель',
   ],
-  price: getRandom(10, 100),
-  type: [
+  TYPE: [
     'palace',
     'flat',
     'house',
     'bungalow',
     'hotel',
   ],
-  rooms: getRandom(1, 4),
-  guests: getRandom(0, 5),
-  checkin: ['12:00', '13:00', '14:00'],
-  checkout: ['12:00', '13:00', '14:00'],
-  features: [
+  TIME: [
+    '12:00',
+    '13:00',
+    '14:00',
+  ],
+  FEATURES: [
     'wifi',
     'dishwasher',
     'parking',
     'washer',
     'elevator',
-    'conditioner'],
-  description: [
+    'conditioner',
+  ],
+  DESCRIPTION: [
     'Тут нормально',
     'Тут не очень',
   ],
-  photos: [
+  PHOTOS: [
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
   ],
 };
 
-const getRandomArrayElement = (elements) => elements[getRandom(0, elements.length - 1)];
+const LOCATION = {
+  LAT: {
+    MIN: 35.6500,
+    MAX: 35.7000,
+  },
+  LNG: {
+    MIN: 139.70000,
+    MAX: 139.80000,
+  },
+};
+
+const getRandomArrayElement = (data) => {
+  const index = getRandom(0, data.length - 1);
+
+  return data[index];
+};
 
 const getAvatar = () => {
   const randomNum = `0${getRandom(1, 10)}`.slice(-2);
   return `img/avatars/user${randomNum}.png`;
 };
 
-const getFeatures = () => {
-  const maxLength = offer.features.length;
-  const lengthOfArray = getRandom(1, maxLength);
+const getRandomArray = (data) => {
+  const maxLength = data.length;
+  const arrayLength = getRandom(1, maxLength);
   const array = [];
 
-  while (array.length < lengthOfArray) {
-    const indexOfEl = getRandom(0, maxLength - 1);
-    const el = offer.features[indexOfEl];
+  while (array.length < arrayLength) {
+    const index = getRandom(0, maxLength - 1);
+    const element = data[index];
 
-    if (!array.includes(el)) {
-      array.push(el);
+    if (!array.includes(element)) {
+      array.push(element);
     }
   }
   return array;
 };
 
-const getLocation = () => ({
-  lat: getRandomFloat(35.65000, 35.70000, 5),
-  lng: getRandomFloat(139.70000, 139.80000, 5),
-});
-
-const settleIn = () => ({
-  author: getAvatar(),
-  title: getRandomArrayElement(offer.title),
-  address: `${getLocation().lat }, ${ getLocation().lng}`,
-  price: getRandom(10000, 111000),
-  type: getRandomArrayElement(offer.type),
-  rooms: getRandom(0, 5),
-  guests: getRandom(0, 5),
-  checkin: getRandomArrayElement(offer.checkin),
-  checkout: getRandomArrayElement(offer.checkout),
-  features: getFeatures(),
-  description: getRandomArrayElement(offer.description),
-  photos: getRandomArrayElement(offer.photos),
-  location: `${getLocation().lat }, ${ getLocation().lng}`,
-});
+const settleIn = () => {
+  const randomLat = getRandomFloat(LOCATION.LAT.MIN, LOCATION.LAT.MAX, 5);
+  const randomlng = getRandomFloat(LOCATION.LNG.MIN, LOCATION.LNG.MAX, 5);
+  return {
+    author: getAvatar(),
+    title: getRandomArrayElement(OFFER.TITLE),
+    address: `${randomLat}, ${randomlng}`,
+    price: getRandom(10000, 111000),
+    type: getRandomArrayElement(OFFER.TYPE),
+    rooms: getRandom(0, 5),
+    guests: getRandom(0, 5),
+    checkin: getRandomArrayElement(OFFER.TIME),
+    checkout: getRandomArrayElement(OFFER.TIME),
+    features: getRandomArray( OFFER.FEATURES ),
+    description: getRandomArrayElement(OFFER.DESCRIPTION),
+    photos: getRandomArray(OFFER.PHOTOS),
+    location: `${randomLat}, ${randomlng}`,
+  };};
 
 const similarOffer = Array.from({length: 10}, settleIn);
 
