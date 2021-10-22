@@ -1,2 +1,6 @@
-import './util.js';
-import './data.js';
+import {settleIn} from './data.js';
+
+const similarOffer = Array.from({length: 10}, settleIn);
+
+similarOffer;
+

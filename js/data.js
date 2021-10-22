@@ -1,4 +1,4 @@
-import {getRandom, getRandomFloat, getRandomArray, getRandomArrayElement, getAvatar} from './util.js';
+import {getRandom, getRandomFloat, getRandomArray, getRandomArrayElement} from './util.js';
 
 const OFFER = {
   TITLE: [
@@ -47,6 +47,11 @@ const LOCATION = {
   },
 };
 
+const getAvatar = () => {
+  const randomNum = `0${getRandom(1, 10)}`.slice(-2);
+  return `img/avatars/user${randomNum}.png`;
+};
+
 const settleIn = () => {
   const randomLat = getRandomFloat(LOCATION.LAT.MIN, LOCATION.LAT.MAX, 5);
   const randomlng = getRandomFloat(LOCATION.LNG.MIN, LOCATION.LNG.MAX, 5);
@@ -66,6 +71,4 @@ const settleIn = () => {
     location: `${randomLat}, ${randomlng}`,
   };};
 
-const similarOffer = Array.from({length: 10}, settleIn);
-
-similarOffer();
+export {settleIn};

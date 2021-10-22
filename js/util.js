@@ -36,9 +36,4 @@ const getRandomArrayElement = (data) => {
   return data[index];
 };
 
-const getAvatar = () => {
-  const randomNum = `0${getRandom(1, 10)}`.slice(-2);
-  return `img/avatars/user${randomNum}.png`;
-};
-
-export {getRandom, getRandomFloat, getRandomArray, getRandomArrayElement, getAvatar};
+export {getRandom, getRandomFloat, getRandomArray, getRandomArrayElement};
